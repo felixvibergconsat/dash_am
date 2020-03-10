@@ -1,0 +1,6 @@
+numpy
+pandas
+dash
+pyodbc
+torch
+torchvision
