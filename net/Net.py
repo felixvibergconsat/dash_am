@@ -1,15 +1,15 @@
 import torch
 import torch.nn as nn
+import numpy as np
 from torchvision import transforms
 import argparse
 import custom_transforms
 
-
 class Net(nn.Module):
-    def __init__(self):
-        super(Net, self).__init__()
+    def __init__(self, size):
+        super(Net, self).__init__() 
 
-        self.fc1 = nn.Linear(42, 42)
+        self.fc1 = nn.Linear(size, 42)
         self.fc2 = nn.Linear(42, 42)
         self.fc3 = nn.Linear(42, 42)
         self.fc4 = nn.Linear(42, 42)

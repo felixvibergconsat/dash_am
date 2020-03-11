@@ -21,8 +21,12 @@ with open('env') as env_data:
         os.environ[s[0]] = s[1][:-1]
 
 def main():
-    model = neural_network.Model()
     helpers = np.load('app/data/helpers.npy', allow_pickle=True)
+    n_station = np.size(helpers[6])
+    n_design = np.size(helpers[7])
+    n_clearance = np.size(helpers[8])
+    size = 5+2+n_station+n_design+n_clearance
+    model = neural_network.Model(size)
     min_rollers, max_rollers  = get_minmax(helpers[0])
     min_diameter, max_diameter = get_minmax(helpers[1])
     min_thickness, max_thickness = get_minmax(helpers[2])

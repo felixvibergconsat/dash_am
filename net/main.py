@@ -21,9 +21,9 @@ def start_session():
 
 
 class Model:
-    def __init__(self):
+    def __init__(self, size):
         self.best = 100
-        self.Net = import_module('Net').Net()
+        self.Net = import_module('Net').Net(size)
         self.net_args = self.Net.args()
 
         #self.Net.load_state_dict(torch.load('net.pth', map_location='cpu'))
@@ -114,7 +114,14 @@ class Model:
 
 def main():
     helpers = np.load('../app/data/helpers.npy', allow_pickle=True)
-    model = Model()
+    
+    helpers = np.load('../app/data/helpers.npy', allow_pickle=True)
+    n_station = np.size(helpers[6])
+    n_design = np.size(helpers[7])
+    n_clearance = np.size(helpers[8])
+    size = 5+2+n_station+n_design+n_clearance
+
+    model = Model(size)
     start_session()
 
     for epoch in range(model.epoch, model.net_args.epochs + 1):
