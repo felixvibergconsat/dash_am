@@ -50,7 +50,38 @@ def predict_last_week(data, model, helpers):
                             clearance), axis=1)
     output = model.eval(source)
     predictions = deprocess(output, helpers[5])
-    return data[:, 9], 3600/predictions, data[:, 0]
+    return data[:, 9], 3600/predictions, data[:, 0], data[:, 10]
+
+def predict_future(data, model, helpers):
+    n_rows = np.size(data[:, 0])
+    rollers = np.transpose([process(data[:, 2].astype('float64'), helpers[0])])
+    diameter = np.transpose([process(data[:, 3].astype('float64'), helpers[1])])
+    thickness = np.transpose([process(data[:, 4].astype('float64'), helpers[2])])
+    width = np.transpose([process(data[:, 5].astype('float64'), helpers[3])])
+    mass = np.transpose([process(data[:, 6].astype('float64'), helpers[4])])
+
+    station = np.zeros((n_rows, np.size(helpers[6])))
+    design = np.zeros((n_rows, np.size(helpers[7])))
+    clearance = np.zeros((n_rows, np.size(helpers[8])))
+
+    for i in range(len(data)):
+        design[i, np.where(helpers[7][0][0] == data[i,8])] = 1
+        clearance[i, np.where(helpers[8][0][0] == data[i,9])] = 1
+        station[i, np.where(helpers[6][0][0] == data[i,7])] = 1
+    
+    source = np.concatenate((rollers, 
+                            diameter, 
+                            thickness,
+                            width,
+                            mass,
+                            np.zeros((n_rows, 1)), 
+                            np.ones((n_rows, 1)), 
+                            station, 
+                            design, 
+                            clearance), axis=1)
+    output = model.eval(source)
+    predictions = deprocess(output, helpers[5])
+    return 3600/predictions, data[:, 0], data[:, 1]
 
 def exec_sql(env, command):
     conn = pyodbc.connect(

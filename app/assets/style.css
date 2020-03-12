@@ -79,6 +79,18 @@
 .dropdown-row{
 }
 
+.graph{
+	border: dashed;
+	margin: 10px;
+}
+
+.AM_last_days_title{
+	padding: 10px;
+	display: inline-block;
+	width: 150px;
+	vertical-align: middle;
+}
+
 .bundlerleft .result{
 	text-align: center;
 }
