@@ -82,6 +82,8 @@
 .graph{
 	border: dashed;
 	margin: 10px;
+	font-size: 24px;
+	font-weight: bold;
 }
 
 .AM_last_days_title{
